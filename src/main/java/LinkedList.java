@@ -97,9 +97,35 @@ public class LinkedList<T> implements List<T> {
     }
 
     @Override
-    public boolean remove(final Object o) {
+    public boolean remove(final Object o) throws NullPointerException{
         // BEGIN (write your solution here)
+        if (o==null) throw new NullPointerException();
 
+        for(Item<T> p =this.first;p!=null;p=p.next){
+            if (p.equals(o)){
+                Item<T> nextObj=p.getNext();
+                Item<T> prevObj=p.getPrev();
+
+                if (nextObj==null){
+                    last=prevObj;
+                    prevObj.next=null;
+                    size--;
+                    return true;
+                }
+                if (prevObj==null){
+                    first=nextObj;
+                    nextObj.prev=null;
+                    size--;
+                    return true;
+                }
+
+                nextObj.prev=prevObj;
+                prevObj.next=nextObj;
+                size--;
+                return true;
+            }
+        }
+        return false;
         // END
     }
 
@@ -138,7 +164,9 @@ public class LinkedList<T> implements List<T> {
     @Override
     public void clear() {
         // BEGIN (write your solution here)
-
+        first = null;
+        last = null;
+        size=0;
         // END
     }
 
@@ -146,6 +174,33 @@ public class LinkedList<T> implements List<T> {
     public T remove(final int index) {
         // BEGIN (write your solution here)
 
+        if (o==null) throw new NullPointerException();
+
+        for(Item<T> p =this.first;p!=null;p=p.next){
+            if (p.equals(o)){
+                Item<T> nextObj=p.getNext();
+                Item<T> prevObj=p.getPrev();
+
+                if (nextObj==null){
+                    last=prevObj;
+                    prevObj.next=null;
+                    size--;
+                    return true;
+                }
+                if (prevObj==null){
+                    first=nextObj;
+                    nextObj.prev=null;
+                    size--;
+                    return true;
+                }
+
+                nextObj.prev=prevObj;
+                prevObj.next=nextObj;
+                size--;
+                return true;
+            }
+        }
+        return false;
         // END
     }
 
