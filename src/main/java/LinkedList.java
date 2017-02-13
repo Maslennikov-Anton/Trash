@@ -35,7 +35,7 @@ public class LinkedList<T> implements List<T> {
             }
         }else{
             for(Item<T> p =this.first;p!=null;p=p.next){
-                if (p.equals(o)){
+                if (o.equals(p.getElement())){
                     return true;
                 }
             }
@@ -97,32 +97,57 @@ public class LinkedList<T> implements List<T> {
     }
 
     @Override
-    public boolean remove(final Object o) throws NullPointerException{
+    public boolean remove(final Object o) {
         // BEGIN (write your solution here)
-        if (o==null) throw new NullPointerException();
+        if (o==null) {
+            for(Item<T> p =this.first;p!=null;p=p.next){
+                if (p.getElement()==null){
+                    Item<T> nextObj=p.getNext();
+                    Item<T> prevObj=p.getPrev();
 
-        for(Item<T> p =this.first;p!=null;p=p.next){
-            if (p.equals(o)){
-                Item<T> nextObj=p.getNext();
-                Item<T> prevObj=p.getPrev();
+                    if (nextObj==null){
+                        last=prevObj;
+                        prevObj.next=null;
+                        size--;
+                        return true;
+                    }
+                    if (prevObj==null){
+                        first=nextObj;
+                        nextObj.prev=null;
+                        size--;
+                        return true;
+                    }
 
-                if (nextObj==null){
-                    last=prevObj;
-                    prevObj.next=null;
+                    nextObj.prev=prevObj;
+                    prevObj.next=nextObj;
                     size--;
                     return true;
                 }
-                if (prevObj==null){
-                    first=nextObj;
-                    nextObj.prev=null;
+            }
+        } else {
+            for(Item<T> p =this.first;p!=null;p=p.next){
+                if (o.equals(p.getElement())){
+                    Item<T> nextObj=p.getNext();
+                    Item<T> prevObj=p.getPrev();
+
+                    if (nextObj==null){
+                        last=prevObj;
+                        prevObj.next=null;
+                        size--;
+                        return true;
+                    }
+                    if (prevObj==null){
+                        first=nextObj;
+                        nextObj.prev=null;
+                        size--;
+                        return true;
+                    }
+
+                    nextObj.prev=prevObj;
+                    prevObj.next=nextObj;
                     size--;
                     return true;
                 }
-
-                nextObj.prev=prevObj;
-                prevObj.next=nextObj;
-                size--;
-                return true;
             }
         }
         return false;
@@ -171,13 +196,16 @@ public class LinkedList<T> implements List<T> {
     }
 
     @Override
-    public T remove(final int index) {
+    public T remove(final int index)  throws IndexOutOfBoundsException{
         // BEGIN (write your solution here)
 
-        if (o==null) throw new NullPointerException();
+        if (index<0 ||index>this.size()-1) throw new IndexOutOfBoundsException();
 
-        for(Item<T> p =this.first;p!=null;p=p.next){
-            if (p.equals(o)){
+        int w=0;
+        Item<T> p =this.first;
+
+        for(;p!=null;p=p.next){
+            if (index==w){
                 Item<T> nextObj=p.getNext();
                 Item<T> prevObj=p.getPrev();
 
@@ -185,22 +213,24 @@ public class LinkedList<T> implements List<T> {
                     last=prevObj;
                     prevObj.next=null;
                     size--;
-                    return true;
+                    return p.getElement();
                 }
                 if (prevObj==null){
                     first=nextObj;
                     nextObj.prev=null;
                     size--;
-                    return true;
+                    return p.getElement();
                 }
 
                 nextObj.prev=prevObj;
                 prevObj.next=nextObj;
                 size--;
-                return true;
+                return p.getElement();
+
             }
+            w++;
         }
-        return false;
+        return p.getElement();
         // END
     }
 
@@ -230,7 +260,23 @@ public class LinkedList<T> implements List<T> {
     @Override
     public int indexOf(final Object target) {
         // BEGIN (write your solution here)
-
+        int w=0;
+        if (target==null){
+            for (Item<T> p =this.first;p!=null;p=p.next){
+                if (p.getElement()==null){
+                    return w;
+                }
+                w++;
+            }
+        } else {
+             for (Item<T> p =this.first;p!=null;p=p.next) {
+                 if (target.equals(p.getElement())) {
+                     return w;
+                 }
+                 w++;
+             }
+        }
+        return -1;
         // END
     }
 
@@ -254,6 +300,16 @@ public class LinkedList<T> implements List<T> {
     @Override
     public T get(final int index) {
         // BEGIN (write your solution here)
+        if (index<0 ||index>this.size()-1) throw new IndexOutOfBoundsException();
+
+        int w=0;
+
+        for (Item<T> p=first;p!=null;p=p.next){
+            if (index==w){
+                return p.getElement();
+            }
+            w++;
+        }
 
         // END
     }
