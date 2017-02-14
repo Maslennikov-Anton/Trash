@@ -291,26 +291,39 @@ public class LinkedList<T> implements List<T> {
     }
 
     @Override
-    public T set(final int index, final T element) {
-        // BEGIN (write your solution here)
-
-        // END
-    }
-
-    @Override
-    public T get(final int index) {
+    public T set(final int index, final T element)throws IndexOutOfBoundsException {
         // BEGIN (write your solution here)
         if (index<0 ||index>this.size()-1) throw new IndexOutOfBoundsException();
 
         int w=0;
+        Item<T> s=null;
 
         for (Item<T> p=first;p!=null;p=p.next){
             if (index==w){
-                return p.getElement();
+                s.element=p.element;
+                p.element=element;
             }
             w++;
         }
+        return s.element;
+        // END
+    }
 
+    @Override
+    public T get(final int index) throws IndexOutOfBoundsException{
+        // BEGIN (write your solution here)
+        if (index<0 ||index>this.size()-1) throw new IndexOutOfBoundsException();
+
+        int w=0;
+        Item<T> p=first;
+
+        for (;p!=null;p=p.next){
+            if (index==w){
+                break;
+            }
+            w++;
+        }
+        return p.getElement();
         // END
     }
 
