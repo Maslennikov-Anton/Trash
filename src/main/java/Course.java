@@ -1,22 +1,21 @@
-
 import java.util.List;
 import java.util.Date;
 
 public class Course {
 
-    private final Long uuid;
+    private final String uuid;
 
     private final String name;
 
     private final List<Session> sessions;
 
-    public Course(final Long uuid, final String name, final List<Session> sessions) {
+    public Course(final String uuid, final String name, final List<Session> sessions) {
         this.uuid = uuid;
         this.name = name;
         this.sessions = sessions;
     }
 
-    public Long getUuid() {
+    public String getUuid() {
         return uuid;
     }
 
@@ -30,13 +29,30 @@ public class Course {
 
     @Override
     public boolean equals(final Object object) {
+        if (!(object instanceof Course))
+            return false;
+
+        final Course that = (Course) object;
+        if (!that.getUuid().equals(this.getUuid()))
+            return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
         // BEGIN (write your solution here)
-        if (object instanceof Course) return false;
+        if (this.uuid==null || this.uuid=="") return 0;
 
-        Course that =(Course) object;
+        char[]strToArr=this.uuid.toCharArray();
+        int hash=0;
 
-        return that.uuid.equals(this.uuid);
+        for (char item: strToArr
+             ) {
+            hash+=item;
+        }
 
+        return hash;
         // END
     }
 
@@ -58,20 +74,23 @@ public class Course {
 
         @Override
         public boolean equals(final Object object) {
-            // BEGIN (write your solution here)
-            if (object instanceof Session) return false;
+            if (!(object instanceof Session)) return false;
 
-            Session that =(Session) object;
-            if (that.getCourse().equals(this.getCourse())){
-                if (that.getStartDate().equals(this.getStartDate())){
-                    return true;
-                }
-            }
-            return false;
+            final Session that = (Session) object;
+            if (!that.getStartDate().equals(this.getStartDate())) return false;
+
+            if (!that.getCourse().equals(this.getCourse())) return false;
+
+            return true;
+        }
+
+        @Override
+        public int hashCode() {
+            // BEGIN (write your solution here)
+            return startDate.hashCode();
             // END
         }
 
     }
 
 }
-
