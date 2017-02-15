@@ -9,6 +9,7 @@ public class Test1 {
         System.out.println(a.put("a","a"));
         System.out.println(a.put("a","b"));
 
+
         //System.out.println(a.size());
 //        System.out.println(a.values());
 //
