@@ -51,42 +51,64 @@ public class HashSet<T> implements Set<T> {
     @Override
     public boolean add(T t) {
         // BEGIN (write your solution here)
-        return this.elements.put(t,EXIST);
+        this.elements.put(t,EXIST);
+        return EXIST;
         // END
     }
 
     @Override
     public boolean remove(Object o) {
         // BEGIN (write your solution here)
-        return this.elements.remove(o);
+        this.elements.remove(o);
+        return EXIST;
         // END
     }
 
     @Override
     public boolean containsAll(Collection<?> c) {
         // BEGIN (write your solution here)
-
+        for (Object item: c
+             ) {
+            if (!this.contains(item)){
+                return !EXIST;
+            }
+        }
+        return EXIST;
         // END
     }
 
     @Override
     public boolean addAll(Collection<? extends T> c) {
         // BEGIN (write your solution here)
-
+        for (T item: c
+                ) {
+            this.add(item);
+            }
+        return EXIST;
         // END
     }
 
     @Override
     public boolean removeAll(Collection<?> c) {
         // BEGIN (write your solution here)
-
+        for (Object item: c
+                ) {
+            this.remove(item);
+        }
+        return EXIST;
         // END
     }
 
     @Override
     public boolean retainAll(Collection<?> c) {
         // BEGIN (write your solution here)
-
+        for (Object item:elements.keySet()
+             ) {
+            if (!c.contains(item)){
+                this.remove(item);
+            }
+        }
+        return EXIST;
         // END
     }
 
