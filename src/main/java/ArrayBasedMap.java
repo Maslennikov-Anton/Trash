@@ -167,7 +167,7 @@ public class ArrayBasedMap<K, V> implements Map<K, V> {
 
     @Override
     public Set<Entry<K, V>> entrySet() {
-        return (Set<Entry<K, V>>)(Set)new HashSet<>(values);
+        return (Set<Entry<K, V>>)(Set)new HashSet<>();
     }
 
     private class Pair implements Map.Entry<K, V> {
